@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Custom Vertical Flip Book</title>
+<style>
+body {
+    margin: 0;
+    background: #222;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+.book-container {
+    position: relative;
+    width: 800px;  /* two pages side by side */
+    height: 600px;
+    perspective: 1500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pages {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    position: relative;
+}
+
+.page {
+    width: 50%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+    transition: transform 1s;
+    transform-origin: left;
+}
+
+button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.6);
+    color: white;
+    border: none;
+    font-size: 28px;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.prev { left: -80px; }
+.next { right: -80px; }
+
+button:hover {
+    background: rgba(255,255,255,0.3);
+}
+</style>
+</head>
+<body>
+
+<div class="book-container">
+    <div class="pages" id="pages"></div>
+    <button class="prev" onclick="prevSpread()">❮</button>
+    <button class="next" onclick="nextSpread()">❯</button>
+</div>
+
+<script>
+const pagesContainer = document.getElementById('pages');
+const spreads = [
+  ['img/1.png','img/6.png'],
+  ['img/2.png','img/3.png'],
+  ['img/4.png','img/5.png'],
+  ['img/8.png','img/9.png'],
+  ['img/7.png','img/10.png']
+];
+let currentSpread = 0;
+
+function renderSpread() {
+    pagesContainer.innerHTML = '';
+    const leftImage = spreads[currentSpread][0];
+    const rightImage = spreads[currentSpread][1];
+
+    if(leftImage){
+        const leftPage = document.createElement('div');
+        leftPage.className = 'page';
+        leftPage.style.backgroundImage = `url('${leftImage}')`;
+        pagesContainer.appendChild(leftPage);
+    }
+
+    if(rightImage){
+        const rightPage = document.createElement('div');
+        rightPage.className = 'page';
+        rightPage.style.backgroundImage = `url('${rightImage}')`;
+        rightPage.style.transformOrigin = 'right';
+        pagesContainer.appendChild(rightPage);
+    }
+}
+
+function nextSpread(){
+    if(currentSpread < spreads.length - 1){
+        currentSpread++;
+        renderSpread();
+    }
+}
+
+function prevSpread(){
+    if(currentSpread > 0){
+        currentSpread--;
+        renderSpread();
+    }
+}
+
+// Initial render
+renderSpread();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MY LOVESTORYYY...</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="slider">
+
+    <button class="prev" onclick="prevSlide()">❮</button>
+
+    <div class="slides" id="slides">
+        <!-- Images auto generated -->
+    </div>
+
+    <button class="next" onclick="nextSlide()">❯</button>
+
+</div>
+<style type="text/css">body {
+    margin: 0;
+    background: #111;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+.slider {
+    position: relative;
+    width: 85%;
+    max-width: 900px;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.slides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.slides img {
+    width: 100%;
+    flex-shrink: 0;
+    object-fit: contain;
+    background: black;
+}
+
+button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.6);
+    color: white;
+    border: none;
+    font-size: 28px;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+
+button:hover {
+    background: rgba(255,255,255,0.3);
+}</style>
+<script type="text/javascript">const slidesContainer = document.getElementById("slides");
+let currentSlide = 0;
+const totalSlides = 41;
+
+// Generate images dynamically from img folder
+for (let i = 1; i <= totalSlides; i++) {
+    let img = document.createElement("img");
+    img.src = "img/" + i + ".jpg";
+    slidesContainer.appendChild(img);
+}
+
+function updateSlide() {
+    slidesContainer.style.transform =
+        "translateX(-" + currentSlide * 100 + "%)";
+}
+
+function nextSlide() {
+    if (currentSlide < totalSlides - 1) {
+        currentSlide++;
+    } else {
+        currentSlide = 0; // loop back to first
+    }
+    updateSlide();
+}
+
+function prevSlide() {
+    if (currentSlide > 0) {
+        currentSlide--;
+    } else {
+        currentSlide = totalSlides - 1; // loop to last
+    }
+    updateSlide();
+}</script>
+</body>
+</html>
